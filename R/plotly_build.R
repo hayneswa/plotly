@@ -36,7 +36,7 @@ plotly_build.plotly <- function(p) {
 
     d <- plotly_data(p, y)
     x <- rapply(x, eval_attr, data = d, how = "list")
-    x[lengths(x) > 0]
+    x[lapply(x, length) > 0]
 
   }, p$x$layoutAttrs, names2(p$x$layoutAttrs))
 
@@ -174,7 +174,7 @@ plotly_build.plotly <- function(p) {
     # TODO: provide a better way to clean up "high-level" attrs
     trace[c("ymin", "ymax", "yend", "xend")] <- NULL
 
-    trace[lengths(trace) > 0]
+    trace[lapply(trace, length) > 0]
 
   }, p$x$attrs, names2(p$x$attrs))
 
@@ -304,7 +304,7 @@ train_data <- function(data, trace) {
 
 map_size <- function(traces) {
   sizeList <- lapply(traces, "[[", "size")
-  nSizes <- lengths(sizeList)
+  nSizes <- lapply(sizeList, length)
   # if no "top-level" color is present, return traces untouched
   if (all(nSizes == 0)) {
     return(traces)
@@ -523,7 +523,7 @@ map_color <- function(traces, title = "", na.color = "transparent") {
 
 map_symbol <- function(traces) {
   symbolList <- lapply(traces, "[[", "symbol")
-  nSymbols <- lengths(symbolList)
+  nSymbols <- lapply(symbolList, length)
   # if no "top-level" symbol is present, return traces untouched
   if (all(nSymbols == 0)) {
     return(traces)
@@ -562,7 +562,7 @@ map_symbol <- function(traces) {
 
 map_linetype <- function(traces) {
   linetypeList <- lapply(traces, "[[", "linetype")
-  nLinetypes <- lengths(linetypeList)
+  nLinetypes <- lapply(linetypeList, length)
   # if no "top-level" linetype is present, return traces untouched
   if (all(nLinetypes == 0)) {
     return(traces)

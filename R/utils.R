@@ -150,7 +150,7 @@ verify_box <- function(proposed, schema) {
 verify_type <- function(trace) {
   if (is.null(trace$type)) {
     attrs <- names(trace)
-    attrLengths <- lengths(trace)
+    attrLengths <- lapply(trace, length)
     trace$type <- if (all(c("x", "y", "z") %in% attrs)) {
        if (all(c("i", "j", "k") %in% attrs)) "mesh3d" else "scatter3d"
     } else if (all(c("x", "y") %in% attrs)) {
